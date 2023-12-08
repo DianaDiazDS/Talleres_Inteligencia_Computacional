@@ -6,7 +6,7 @@ def inicializar_tablero(filas, columnas):
 def imprimir_tablero(tablero):
     # Imprimir los números de las columnas
     print(" ".join(str(i) for i in range(len(tablero[0]))))
-    print("-" * (2 * len(tablero[0]) - 1))  # Línea separadora
+    print("-" * (2 * len(tablero[0]) - 1))
 
     for fila in tablero:
         print(' '.join(['X' if celda == 1 else 'O'
@@ -37,34 +37,27 @@ def es_terminal(tablero):
         for fila in range(len(tablero) - 3):
             for col in range(len(tablero[0])):
                 if np.all(tablero[fila:fila+4, col] == jugador):
-                    print(f"¡Victoria para el jugador {jugador} en fila!")
                     return True
 
         # Verifica columnas
         for col in range(len(tablero[0]) - 3):
             for fila in range(len(tablero)):
                 if np.all(tablero[fila, col:col+4] == jugador):
-                    print(f"¡Victoria para el jugador {jugador} en columna!")
                     return True
 
         # Verifica diagonal inferior izquierda a superior derecha
         for fila in range(len(tablero) - 3):
             for col in range(len(tablero[0]) - 3):
                 if np.all(np.diag(tablero[fila:fila+4, col:col+4]) == jugador):
-                    print(f"¡Victoria para el jugador {jugador} en diagonal inferior"
-                          f" izquierda a superior derecha!")
                     return True
 
         # Verifica diagonal superior izquierda a inferior derecha
         for fila in range(3, len(tablero)):
             for col in range(len(tablero[0]) - 3):
                 if np.all(np.diag(tablero[fila-3:fila+1, col:col+4][::-1]) == jugador):
-                    print(f"¡Victoria para el jugador {jugador} en diagonal superior izquierda a inferior derecha!")
                     return True
 
-    # Verifica si el tablero está lleno de fichas (empate)
-    # if np.all(tablero != 0):
-    #     return True
+
 
     return False
 
@@ -141,12 +134,12 @@ def jugar_contra_pc():
 
     imprimir_tablero(tablero)
     ganador = evaluar_estado(tablero, 1)
-    if ganador > 0:
+    if ganador < 0:
         print("¡Ganaste!")
-    elif ganador < 0:
-        print("¡La computadora gana!")
+    elif ganador > 0:
+        print("¡enpate")
     else:
-        print("¡Empate!")
+        print("¡La computadora gana!")
 
-# Juega contra la computadora.
+
 jugar_contra_pc()
